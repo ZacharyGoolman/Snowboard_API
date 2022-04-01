@@ -20,7 +20,7 @@ def snowboards_list(request):
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-@api_view(['GET', 'PUT'])
+@api_view(['GET', 'PUT', 'DELETE'])
 def snowboard_detail(request, pk):
     snowboard = get_object_or_404(Snowboard, pk=pk)
     if request.method == 'GET':
@@ -33,4 +33,6 @@ def snowboard_detail(request, pk):
         serializer.save()
         return Response(serializer.data)
        
-   
+    elif request.method == 'DELETE':
+        snowboard.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
